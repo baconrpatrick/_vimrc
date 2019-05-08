@@ -1,5 +1,4 @@
 set nocompatible
-set belloff=all
 set cmdheight=3
 set history=100	" keep 50 lines of command line history
 set hlsearch    " highlight searches
