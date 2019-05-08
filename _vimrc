@@ -15,23 +15,28 @@ set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set showmatch
 set smartcase
+
+" *********file navigation********
+" inspired: https://www.youtube.com/watch?v=XA2WjJbmmoM
 set wildmode=list:full
+set wildmenu
+set path+=** 
+
+" ********************************
 
 filetype plugin on
 filetype plugin indent on
 syntax on
 
-" **********cursor ****************
-let &t_ti.="\e[1 q"
-let &t_SI.="\e[5 q"
-let &t_EI.="\e[1 q"
-let &t_te.="\e[0 q"
+" **********swap files*************
+set directory^=$HOME/.vim/tmp_swp/
 
-" *********************************
-" remove menu and tool bar for gui
-"
-set guioptions -=m 
-set guioptions -=T
+
+" **********cursor ****************
+"let &t_ti.="\e[1 q"
+"let &t_SI.="\e[5 q"
+"let &t_EI.="\e[1 q"
+"let &t_te.="\e[0 q"
 
 " *********************************
 "
@@ -44,6 +49,10 @@ set guioptions -=T
 
 "-----------I use Oracle SQL --------------------------
 let g:sql_type_default = 'Oracle'
+let g:sqlutil_keyword_case = '\U'
+"change keywords to uppercase
+let g:sqlutil_align_comma = 1
+"return after each column
 "let s:SQL_SetType('Oracle')
 
 "-----------Formatting --------------------------------
@@ -59,6 +68,8 @@ set tabstop=4 " an indentation every four columns
 set wrap " wrap long lines
 
 
+"-----------conemu settings----------------------------
+
 " saw this suggested for conemu
 "if !has("gui_running")
 "    set term=xterm
@@ -67,16 +78,15 @@ set wrap " wrap long lines
 ""    let &t_AF="\e[38;5;%dm"
 "endif
 
-set guifont=Inconsolata\ 12
 
 if has("unix")
     set t_Co=256
 endif
 
-colorscheme murphy
-
-"source $VIMRUNTIME/colors/desert.vim
-
+"colorscheme morning 
+"colorscheme murphy
+colorscheme murphy 
+"colorscheme desert256
 "----------file type ---------------------------------
 
 autocmd FileType sql,pkb,pks,c,cpp,java,php,js,python,twig,xml,yml autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
@@ -93,19 +103,21 @@ map <space> viw
 "imap <BS> <ESC>j
 " want to have standard behavior 
 "
-nnoremap <leader>eh :vert help index 
-nnoremap <leader>ev :vsplit $MYVIMRC
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>wv :silent! w! "C:\Program Files (x86)\Vim\_vimrc"<CR>:silent! w! C:\Users\baconp\_vimrc<CR>:silent! w! U:\_vimrc<CR>
+nnoremap <leader>wg :silent! w! "C:\Program Files (x86)\Vim\_gvimrc"<CR>:silent! w! C:\Users\baconp\_gvimrc<CR>:silent! w! U:\_gvimrc<CR>
 nnoremap <leader>lc :let @*=@
-nnoremap <leader>pc lbguw~b 
-nnoremap <leader>sv :source $MYVIMRC
-nnoremap <leader>u YpVr-
-
+nnoremap <leader>c :nohls<CR>
+nnoremap <leader>m :-1read U:\vim\snippets\meeting.txt<CR>:nohls<CR>
+nnoremap <leader>p :-1read U:\vim\snippets\steps_to_problem_solving.txt<CR>:nohls<CR>
+nnoremap <leader>o :-1read U:\vim\snippets\sql\all_sql_snippets.sql<CR>:nohls<CR>
+nnoremap <leader>d :lcd %:p:h<CR>
+nnoremap <leader>fs :!U:\cmd\cmd_python\sql_parse.py<CR>e<CR>
 
 " conemu backspace issue resolution
 "https://conemu.github.io/en/VimXterm.html#vim-bs-issue
 
-"inoremap <Char-0x07F> <BS>
-"nnoremap <Char-0x07F> <BS>
 
 
 "----------Abbreviations------------------------------
@@ -114,7 +126,6 @@ ab constraint#  select <CR>* <CR>from <CR>all_constraints cons, <CR>all_cons_col
 ab createt# CREATE TABLE SCOTT.DEPT1(<CR>DEPTNO NUMBER(2,0), <CR>DNAME VARCHAR2(14 BYTE), <CR>LOC VARCHAR2(13 BYTE), <CR>PRIMARY KEY (DEPTNO) <CR>USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 <CR>STORAGE(INITIAL 106496 NEXT 106496 MINEXTENTS 1 MAXEXTENTS 505 PCTINCREASE 100 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT) <CR>TABLESPACE SYSTEM  ENABLE) <CR>SEGMENT CREATION IMMEDIATE PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 <CR>NOCOMPRESS LOGGING STORAGE(INITIAL 106496 NEXT 106496 MINEXTENTS 1 MAXEXTENTS 505 PCTINCREASE 100 FREELISTS 1 FREELIST GROUPS 1 <CR>BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT) TABLESPACE XXCMFG_DATA/
 ab index#  select <CR>* <CR>from all_indexes ind, <CR>all_ind_columns icol <CR>where <CR>1=1 <CR>and ind.table_name = '&table' <CR>and ind.owner = icol.index_owner <CR>and ind.table_name = icol.table_name <CR>and ind.index_name = icol.index_name
 ab meeting# ---------------------------------------------------------<CR>--      meeting notes                                  --<CR>--                                                     --<CR>--                                                     --<CR>---------------------------------------------------------<CR>
-ab spool# spool C:\temp\temp1.lst
 ab with# with t(a_col) <CR>as<CR>(select 'stuff' a_col from dual) <CR>select<CR> * <CR>from t
 
 
@@ -144,7 +155,6 @@ endif
 
 packadd minpac
 call minpac#init()
-call minpac#add('baconp/minpac', {'type': 'opt'})
 " minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
 "call minpac#add('k-takata/minpac', {'type': 'opt'})
 "call minpac#add('vim-jp/syntax-vim-ex')
@@ -152,7 +162,7 @@ call minpac#add('baconp/minpac', {'type': 'opt'})
 "noticed that I need to be careful about dependencies
 
 
-"-----------package manager----------------------------
+"------end--package manager----------------------------
 
 set diffexpr=MyDiff()
 
@@ -184,3 +194,10 @@ set diffexpr=MyDiff()
      let &shellxquote=l:shxq_sav
    endif
  endfunction
+
+
+"-----------package manager----------------------------
+
+function! GetEnvVars()
+    silent execute "normal! :return $\<C-a>')\<C-b>\<C-right>\<Right>\<Del>split('\<CR>"
+endfunction
