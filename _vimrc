@@ -1,4 +1,6 @@
 set nocompatible
+set guioptions -=m
+set guioptions -=T
 set belloff=all
 set cmdheight=3
 set history=100	" keep 50 lines of command line history
@@ -21,6 +23,14 @@ set smartcase
 set wildmode=list:full
 set wildmenu
 set path+=** 
+
+
+" *********fonts *****************
+if has('gui_gtk')
+    set guifont=Dejavu\ Sans\ Mono\ 12
+else
+    set guifont=Consolas:h10
+endif
 
 " ********************************
 
