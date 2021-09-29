@@ -1,3 +1,4 @@
+
 set nocompatible
 set cmdheight=3
 set history=100	" keep 50 lines of command line history
@@ -5,8 +6,6 @@ set hlsearch    " highlight searches
 set ignorecase
 set incsearch	" do incremental searching
 set laststatus=2
-set lines=40 columns=140
-set lines=42 columns=195
 set noeb
 set novb
 set number
@@ -14,6 +13,7 @@ set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set showmatch
 set smartcase
+set clipboard=unnamed
 
 " *********file navigation********
 " inspired: https://www.youtube.com/watch?v=XA2WjJbmmoM
@@ -23,22 +23,22 @@ set path+=**
 
 " ********************************
 
-filetype plugin on
-filetype plugin indent on
+filetype plugin off
+filetype plugin indent off
 syntax on
 
+" ****airline**********************
+
+let g:airline#extensions#ale#enabled = 1
+" enable list of buffers
+let g:airline#extensions#tabline#enabled = 1
+" show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+
 " **********swap files*************
-set directory^=$HOME/.vim/tmp_swp/
+set directory^=$HOME/vimfiles/tmp_swp/
 
-
-" **********cursor ****************
-"let &t_ti.="\e[1 q"
-"let &t_SI.="\e[5 q"
-"let &t_EI.="\e[1 q"
-"let &t_te.="\e[0 q"
-
-" *********************************
-"
 
 "-----------Formatting --------------------------------
 " Formatting {
@@ -56,6 +56,7 @@ set wrap " wrap long lines
 
 if has("unix")
     set t_Co=256
+    set rtp+=~/.vim
 endif
 
 "colorscheme morning 
@@ -81,7 +82,6 @@ map <space> viw
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>lc :let @*=@
-nnoremap <leader>c :nohls<CR>
 nnoremap <leader>d :lcd %:p:h<CR>
 
 
@@ -107,57 +107,6 @@ let g:netrw_special_syntax= 1
 
 "-----------Formatting --------------------------------
 "
-
-
-"-----------package manager----------------------------
-
-"most of my plugins have been placed in \pack\baconp\start\
-"  https://github.com/k-takata/minpac
-
-packadd minpac
-call minpac#init()
-" minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
-"call minpac#add('k-takata/minpac', {'type': 'opt'})
-"call minpac#add('vim-jp/syntax-vim-ex')
-"call minpac#add('vim-airline/vim-airline')
-"noticed that I need to be careful about dependencies
-
-
-"------end--package manager----------------------------
-
-set diffexpr=MyDiff()
-
- function MyDiff()
-   let opt = '-a --binary '
-   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-   if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-   let arg1 = v:fname_in
-   if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-   let arg2 = v:fname_new
-   if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-   let arg3 = v:fname_out
-   if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-   if $VIMRUNTIME =~ ' '
-     if &sh =~ '\<cmd'
-       if empty(&shellxquote)
-         let l:shxq_sav = ''
-         set shellxquote&
-       endif
-       let cmd = '"' . $VIMRUNTIME . '\diff"'
-     else
-       let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-     endif
-   else
-     let cmd = $VIMRUNTIME . '\diff'
-   endif
-   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-   if exists('l:shxq_sav')
-     let &shellxquote=l:shxq_sav
-   endif
- endfunction
-
-
-"-----------package manager----------------------------
 
 function! GetEnvVars()
     silent execute "normal! :return $\<C-a>')\<C-b>\<C-right>\<Right>\<Del>split('\<CR>"
