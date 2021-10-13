@@ -1,4 +1,3 @@
-
 set nocompatible
 set cmdheight=3
 set history=100	" keep 50 lines of command line history
