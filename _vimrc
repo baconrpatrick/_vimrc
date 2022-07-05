@@ -13,14 +13,16 @@ set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set showmatch
 set smartcase
-set spell spelllang=en_us
+set signcolumn=yes
+"set spell spelllang=en_us
 
 " *********file navigation********
 " inspired: https://www.youtube.com/watch?v=XA2WjJbmmoM
 set wildmode=longest:full,full
 set wildmenu
 set path+=** 
-set guifont=Consolas:h12
+set guifont=Consolas:h11
+set matchpairs=<:>,(:),[:],{:},«:»,𝄆:𝄇,👉:👈,🕻:🕽,🖙:🖘,🖛:🖚,🖝:🖜,🗦:🗧,🙬:🙮,🤜:🤛,‘:’,“:”,‹:›,⁅:⁆,⁌:⁍,⁽:⁾,₍:₎,⊣:⊢,⋉:⋊,⌈:⌉,⌊:⌋,〈:〉,⎛:⎞,⎜:⎟,⎝:⎠,⎡:⎤,⎢:⎥,⎣:⎦,⎧:⎫,⎨:⎬,⎩:⎭,⏪:⏩,⏮:⏭,⏴:⏵,◀:▶,◁:▷,◂:▸,◃:▹,◄:►,◅:▻,☛:☚,☞:☜,⚟:⚞,❨:❩,❪:❫,❬:❭,❮:❯,❰:❱,❲:❳,❴:❵,⟅:⟆,⟕:⟖,⟞:⟝,⟢:⟣,⟤:⟥,⟦:⟧,⟨:⟩,⟪:⟫,⟬:⟭,⟮:⟯,⥼:⥽,⦃:⦄,⦅:⦆,⦇:⦈,⦉:⦊,⦋:⦌,⦍:⦐,⦏:⦎,⦑:⦒,⦗:⦘,⧘:⧙,⧚:⧛,⧼:⧽,⫍:⫎,⯇:⯈,⸂:⸃,⸄:⸅,⸉:⸊,⸌:⸍,⸜:⸝,⸠:⸡,⸦:⸧,⸨:⸩,⸶:⸷,⹑:⹐,⹕:⹖,⹗:⹘,〈:〉,《:》,「:」,『:』,【:】,〔:〕,〖:〗,〘:〙,〚:〛,꧁:꧂,﴾:﴿,︵:︶,︷:︸,︹:︺,︻:︼,︽:︾,︿:﹀,﹁:﹂,﹃:﹄,﹇:﹈,﹙:﹚,﹛:﹜,﹝:﹞,（:）,［:］,｛:｝,｟:｠,｢:｣
 
 " *********gui   *****************
 if has('gui')
@@ -32,6 +34,12 @@ endif
 filetype plugin on
 filetype plugin indent on
 syntax on
+
+" ********************************
+
+set undofile
+set undolevels=5000
+set undodir=J:\vimfiles\undodir\
 
 " **********swap files*************
 "set directory^=%TEMP%
@@ -83,6 +91,10 @@ map <space> viw
 "imap <BS> <ESC>j
 " want to have standard behavior 
 "
+"
+"
+nnoremap <leader>le :Lexplore<CR>
+nnoremap <leader>sm :DoShowMarks<CR>
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>wv :silent! w! "C:\Program Files\Vim\_vimrc"<CR>:silent! w! C:\Users\pbacon\_vimrc<CR>:silent! w! J:\_vimrc<CR>
@@ -118,17 +130,17 @@ let g:netrw_winsize       = 20
 "------lsp  ale setting ------------------------------
 " see: https://github.com/dense-analysis/ale
 
-let g:ale_lint_on_save = 1
-let g:ale_linters = {'sql': ['sqlint']}
-let g:ale_fixers = {'sql': ['sqlfmt']}
-let g:ale_linters_explicit = 1
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-let g:ale_lint_on_text_changed = 'never'
-
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
+"let g:ale_lint_on_save = 1
+"let g:ale_linters = {'sql': ['sqlint']}
+"let g:ale_fixers = {'sql': ['sqlfmt']}
+"let g:ale_linters_explicit = 1
+"let g:ale_sign_column_always = 1
+"let g:ale_sign_error = '>>'
+"let g:ale_sign_warning = '--'
+"let g:ale_lint_on_text_changed = 'never'
+"
+"highlight clear ALEErrorSign
+"highlight clear ALEWarningSign
 
 
 "-----airline settings --------------------------------
