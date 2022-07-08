@@ -1,3 +1,4 @@
+
 set nocompatible
 set belloff=all
 set cmdheight=3
@@ -101,9 +102,8 @@ nnoremap <leader>wv :silent! w! "C:\Program Files\Vim\_vimrc"<CR>:silent! w! C:\
 nnoremap <leader>wg :silent! w! "C:\Program Files\Vim\_gvimrc"<CR>:silent! w! C:\Users\pbacon\_gvimrc<CR>:silent! w! J:\_gvimrc<CR>
 nnoremap <leader>lc :let @*=@
 nnoremap <leader>d :lcd %:p:h<CR>
-nnoremap <leader>fs :!U:\cmd\cmd_python\sql_parse.py<CR>e<CR>
-nnoremap <leader>sk :%s/\(\<select\>\)\\|\(\<from\>\)\\|\(\<where\>\)\\|\(group by\)/\U&/gc<CR>
-
+nnoremap <leader>fs :!J:\cmd\cmd_python\sql_parse.py<CR>e<CR>
+nnoremap <leader>sk :%s/\<and\>\\|\<by\>\\|\<date\>\\|\<delete\>\\|\<drop\>\\|\<floor\>\\|\<from\>\\|\<group\>\\|\<by\>\\|\<join\>\\|\<insert\>\\|\<into\>\\|\<like\>\\|\<max\>\\|\<min\>\\|\<on\>\\|\<select\>\\|\<table\>\\|\<truncate\>\\|\<use\>\\|\<with\>\\|\<where\>/\U&/g<CR>:nohls<CR>
 
 
 "----------Abbreviations------------------------------
