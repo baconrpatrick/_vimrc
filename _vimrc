@@ -102,7 +102,7 @@ nnoremap <leader>wg :silent! w! "C:\Program Files\Vim\_gvimrc"<CR>:silent! w! C:
 nnoremap <leader>lc :let @*=@
 nnoremap <leader>d :lcd %:p:h<CR>
 nnoremap <leader>fs :!U:\cmd\cmd_python\sql_parse.py<CR>e<CR>
-nnoremap <leader>y :'b,'ey"<CR>
+nnoremap <leader>sk :%s/\(\<select\>\)\\|\(\<from\>\)\\|\(\<where\>\)\\|\(group by\)/\U&/gc<CR>
 
 
 
